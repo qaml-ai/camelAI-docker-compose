@@ -16,6 +16,25 @@ services:
       - memcached
       - pgvector
 
+  huey:
+    image: 904534089871.dkr.ecr.us-west-2.amazonaws.com/camel-app:latest
+    restart: unless-stopped
+    command: python manage.py run_huey
+    volumes:
+      - media_volume:/app/media
+      - static_volume:/app/staticfiles
+    env_file:
+      - .env.docker
+    environment:
+      - DB_HOST=pgvector
+      - DB_USER=postgres
+      - MEDIA_ROOT=/app/media
+      - MEMCACHED_SERVER=memcached:11211
+    depends_on:
+      - memcached
+      - pgvector
+      - camel
+
   nginx:
     image: nginx:alpine
     restart: unless-stopped
