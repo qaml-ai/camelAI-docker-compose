@@ -30,7 +30,7 @@ Make sure your `.env.docker` file is correctly set up with the required environm
 Once the services are running, create an initial superuser by running:
 
 ```bash
-docker compose exec camel python manage.py createuser
+docker compose exec camel python manage.py createsuperuser
 ```
 
 Follow the prompts to set up the superuser credentials.
