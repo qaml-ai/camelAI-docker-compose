@@ -11,9 +11,9 @@ services:
       - DB_HOST=pgvector
       - DB_USER=postgres
       - MEDIA_ROOT=/app/media
-      - MEMCACHED_SERVER=memcached:11211
+      - REDIS_URL=redis://redis:6379
     depends_on:
-      - memcached
+      - redis
       - pgvector
 
   huey:
@@ -29,9 +29,9 @@ services:
       - DB_HOST=pgvector
       - DB_USER=postgres
       - MEDIA_ROOT=/app/media
-      - MEMCACHED_SERVER=memcached:11211
+      - REDIS_URL=redis://redis:6379
     depends_on:
-      - memcached
+      - redis
       - pgvector
       - camel
 
@@ -47,10 +47,9 @@ services:
     depends_on:
       - camel
 
-  memcached:
-    image: memcached:alpine
+  redis:
+    image: redis:latest
     restart: unless-stopped
-    command: memcached -m 64
 
   pgvector:
     image: pgvector/pgvector:pg17
